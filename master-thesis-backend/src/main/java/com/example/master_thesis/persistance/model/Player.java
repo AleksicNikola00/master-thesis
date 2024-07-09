@@ -29,6 +29,6 @@ public class Player {
     private double averageOffensiveRebounds;
     private double averageDefensiveRebounds;
     private double averagePlusMinus;
-    @ManyToMany
-    private List<Game> games;
+    @OneToMany
+    private List<PlayerGame> games;
 }

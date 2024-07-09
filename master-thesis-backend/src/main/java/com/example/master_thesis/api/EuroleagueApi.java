@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "euroleague", url = "https://live.euroleague.net/api")
 public interface EuroleagueApi {
     @GetMapping("/Boxscore")
-    BoxscoreDto getBoxScore(@RequestParam("gamecode") final String gameCode,
+    BoxscoreDto getBoxScore(@RequestParam("gamecode") final int gameCode,
                             @RequestParam("seasoncode") final String seasonCode);
 }

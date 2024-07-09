@@ -20,7 +20,7 @@ public class BoxscoreDto {
     private String referees;
 
     @JsonProperty("Attendance")
-    private String attendance;
+    private int attendance;
 
     @JsonProperty("ByQuarter")
     private List<QuarterScoreDto> byQuarter;

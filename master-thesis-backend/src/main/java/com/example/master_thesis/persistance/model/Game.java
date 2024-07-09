@@ -1,24 +1,26 @@
 package com.example.master_thesis.persistance.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.List;
 
 @Entity
 @Table(name = "basketball_game")
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private int attendance;
+    private int season;
     @ManyToOne
     @JoinColumn(name = "home_team_id")
     private Team homeTeam;
     @ManyToOne
-    @JoinColumn(name = "guest_team_id")
-    private Team guestTeam;
+    @JoinColumn(name = "away_team_id")
+    private Team awayTeam;
 }
