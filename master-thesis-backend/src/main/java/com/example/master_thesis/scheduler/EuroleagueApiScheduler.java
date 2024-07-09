@@ -16,7 +16,7 @@ public class EuroleagueApiScheduler {
 
     @Scheduled(fixedDelay = 5000)
     public void collectBoxScoreData() {
-        var response = euroleagueApi.getBoxscore("1", SEASON_CODES[0]);
+        var response = euroleagueApi.getBoxScore("1", SEASON_CODES[0]);
         log.info(response.toString());
     }
 }
