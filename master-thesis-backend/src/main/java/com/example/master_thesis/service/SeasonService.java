@@ -14,8 +14,14 @@ public class SeasonService {
 
     @Transactional
     public Season getFirstUncompletedSeason(int year) {
-        var optionalUncompletedSeason = seasonRepository.findFirstByIsCompletedFalseAndYearGreaterThanEqual(year);
-        if (optionalUncompletedSeason.isPresent()) return optionalUncompletedSeason.get();
+        var optionalUncompletedSeason = seasonRepository.findTopByOrderByYearDesc();
+        if (optionalUncompletedSeason.isPresent()) {
+            var existingSeason = optionalUncompletedSeason.get();
+            //If the last season is completed start from next year
+            if (existingSeason.isCompleted())
+                year = existingSeason.getYear() + 1;
+            else return existingSeason;
+        }
 
         var newSeason = Season.builder()
                 .year(year)

@@ -31,17 +31,18 @@ public class EuroleagueApiScheduler {
     @EventListener(ApplicationReadyEvent.class)
     public void collectBoxScoreData() {
         log.info("Collecting boxscore data");
-        var currentSeasonYear = euroleagueScraperProperties.getStartingSeason();
+        var startingSeasonYear = euroleagueScraperProperties.getStartingSeason();
         while (true) {
-            var startingSeason = seasonService.getFirstUncompletedSeason(currentSeasonYear);
-            var collectedGamesNumber = collectGamesData(startingSeason.getYear());
+            var currentSeason = seasonService.getFirstUncompletedSeason(startingSeasonYear);
+            var collectedGamesNumber = collectGamesData(currentSeason.getYear());
             if (collectedGamesNumber <= 1) {
                 log.info("Finished collecting boxscore data");
                 break;
             }
-            startingSeason.setGamesCount(collectedGamesNumber);
-            startingSeason.setCompleted(true);
-            seasonService.updateSeason(startingSeason);
+            currentSeason.setGamesCount(collectedGamesNumber);
+            currentSeason.setCompleted(true);
+            seasonService.updateSeason(currentSeason);
+            log.info("Finished collecting boxscore data for season year {}", currentSeason.getYear());
         }
     }
 
@@ -62,6 +63,7 @@ public class EuroleagueApiScheduler {
             return 0;
         } catch (final Exception exception) {
             log.error(exception.getMessage(), exception);
+            return 0;
         }
     }
 
