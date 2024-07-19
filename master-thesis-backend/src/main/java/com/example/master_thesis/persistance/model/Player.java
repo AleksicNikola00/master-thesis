@@ -4,10 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
-@Table(name="basketball_player")
+@Table(name = "basketball_player")
 @Getter
 @Setter
 public class Player {
@@ -29,6 +27,4 @@ public class Player {
     private double averageOffensiveRebounds;
     private double averageDefensiveRebounds;
     private double averagePlusMinus;
-    @OneToMany
-    private List<PlayerGame> games;
 }

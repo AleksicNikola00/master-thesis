@@ -16,11 +16,13 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private int attendance;
-    private int season;
     @ManyToOne
     @JoinColumn(name = "home_team_id")
     private Team homeTeam;
     @ManyToOne
     @JoinColumn(name = "away_team_id")
     private Team awayTeam;
+    @ManyToOne
+    @JoinColumn(name = "season_id")
+    private Season season;
 }

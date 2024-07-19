@@ -4,6 +4,7 @@ import com.example.master_thesis.persistance.model.Team;
 import com.example.master_thesis.persistance.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 public class TeamService {
     private final TeamRepository teamRepository;
 
+    @Transactional
     public Team createTeam(String name) {
         Optional<Team> optionalExistingTeam = teamRepository.findByName(name);
         if (optionalExistingTeam.isPresent()) return optionalExistingTeam.get();
