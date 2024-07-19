@@ -2,6 +2,7 @@ package com.example.master_thesis.service;
 
 import com.example.master_thesis.persistance.model.Season;
 import com.example.master_thesis.persistance.repository.SeasonRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,5 +24,14 @@ public class SeasonService {
                 .build();
 
         return seasonRepository.save(newSeason);
+    }
+
+    @Transactional
+    public Season updateSeason(Season season) {
+        return seasonRepository.save(season);
+    }
+
+    public Season getSeasonByYear(int year) {
+        return seasonRepository.findByYear(year).orElseThrow(EntityNotFoundException::new);
     }
 }

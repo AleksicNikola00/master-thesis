@@ -63,7 +63,7 @@ public class PlayerStatisticsDto {
     private int totalRebounds;
 
     @JsonProperty("Assistances")
-    private int assistances;
+    private int assists;
 
     @JsonProperty("Steals")
     private int steals;
@@ -87,5 +87,5 @@ public class PlayerStatisticsDto {
     private int valuation;
 
     @JsonProperty("Plusminus")
-    private int plusminus;
+    private int plusMinus;
 }

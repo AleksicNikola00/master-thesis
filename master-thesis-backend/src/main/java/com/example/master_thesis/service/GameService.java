@@ -1,7 +1,6 @@
 package com.example.master_thesis.service;
 
 import com.example.master_thesis.persistance.model.Game;
-import com.example.master_thesis.persistance.model.Season;
 import com.example.master_thesis.persistance.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,10 +10,12 @@ import org.springframework.stereotype.Service;
 public class GameService {
     private final GameRepository gameRepository;
     private final TeamService teamService;
+    private final SeasonService seasonService;
 
-    public Game createGame(int attendance, Season season, String homeTeamName, String awayTeamName) {
+    public Game createGame(int attendance, int seasonYear, String homeTeamName, String awayTeamName) {
         var homeTeam = teamService.createTeam(homeTeamName);
         var awayTeam = teamService.createTeam(awayTeamName);
+        var season = seasonService.getSeasonByYear(seasonYear);
 
         var newGame = Game.builder()
                 .attendance(attendance)

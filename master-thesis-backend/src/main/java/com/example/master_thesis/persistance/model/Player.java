@@ -1,17 +1,23 @@
 package com.example.master_thesis.persistance.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "basketball_player")
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private String euroleagueId;
+    private String firstName;
+    private String lastName;
+    private String imageUrl;
     private double averageMinutes;
     private double averagePoints;
     private double average2PointsAttempted;

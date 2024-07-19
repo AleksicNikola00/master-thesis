@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface SeasonRepository extends JpaRepository<Season, Long> {
     Optional<Season> findFirstByIsCompletedFalseAndYearGreaterThanEqual(int year);
+
+    Optional<Season> findByYear(int year);
 }
