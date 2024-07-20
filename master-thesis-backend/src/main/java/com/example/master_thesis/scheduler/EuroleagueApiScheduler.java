@@ -44,7 +44,7 @@ public class EuroleagueApiScheduler {
             seasonService.updateSeason(currentSeason);
             log.info("Finished collecting boxscore data for season year {}", currentSeason.getYear());
         }
-        playerService.calculatePlayersAverages();
+        //playerService.calculatePlayersAverages();
     }
 
     //TODO Think about caching player and teams data not to fetch data from database everytime
