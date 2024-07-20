@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PlayerGameService {
@@ -15,5 +17,9 @@ public class PlayerGameService {
     @Transactional
     public PlayerGame savePlayerGame(PlayerGame playerGame) {
         return playerGameRepository.save(playerGame);
+    }
+
+    public List<PlayerGame> getAllPlayerGames(Long playerId) {
+        return playerGameRepository.findByPlayerId(playerId);
     }
 }
