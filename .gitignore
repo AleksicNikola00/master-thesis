@@ -316,3 +316,9 @@ fabric.properties
 *.json
 /flask-scraper/.idea
 /volume
+web-scraper/.idea/web-scraper.iml
+web-scraper/.idea/vcs.xml
+web-scraper/.idea/modules.xml
+web-scraper/.idea/misc.xml
+web-scraper/.idea/inspectionProfiles/profiles_settings.xml
+/web-scraper/.idea
