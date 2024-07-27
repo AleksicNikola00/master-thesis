@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from sqs_service import read_messages
+from src.sqs.sqs_service import read_messages
 
 
 class BaseConsumer(ABC):

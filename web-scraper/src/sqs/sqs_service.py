@@ -1,8 +1,7 @@
-from config import sqs
+from src.sqs.config import sqs
 
 
 def read_messages(que_url, process_callback):
-    # process_callback(que_url)
     response = sqs.receive_message(
         QueueUrl=que_url,
         MaxNumberOfMessages=1,

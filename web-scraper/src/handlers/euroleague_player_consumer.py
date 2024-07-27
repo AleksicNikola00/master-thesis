@@ -1,5 +1,5 @@
 from time import sleep
-from handlers.base_handler import BaseConsumer
+from src.handlers.base_handler import BaseConsumer
 
 QUEUE_URL = "https://localhost.localstack.cloud:4566/000000000000/localstack_euroleague_players_request"
 
