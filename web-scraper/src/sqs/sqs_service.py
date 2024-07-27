@@ -3,9 +3,9 @@ from src.sqs.config import sqs
 
 def read_messages(que_url, process_callback):
     response = sqs.receive_message(
-        QueueUrl=que_url,
-        MaxNumberOfMessages=1,
-        WaitTimeSeconds=10  # Long polling
+            QueueUrl=que_url,
+            MaxNumberOfMessages=1,
+            WaitTimeSeconds=10
     )
 
     messages = response.get('Messages', [])
@@ -16,9 +16,9 @@ def read_messages(que_url, process_callback):
 
     for message in messages:
         print('Received message:', message['Body'])
-        # Perform a trivial task (e.g., just echo the message)
+
         process_callback(message)
-        # # Delete the message from the input queue
+
         delete_message(que_url, message['ReceiptHandle'])
 
 

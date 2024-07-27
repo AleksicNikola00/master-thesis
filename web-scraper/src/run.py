@@ -1,17 +1,13 @@
 from concurrent.futures import ThreadPoolExecutor
-from handlers.euroleague_player_consumer import EuroleaguePlayerConsumer
-from handlers.euroleague_game_consumer import EuroleagueGameConsumer
-#rom src.flask_init import app, startup_app
+from consumers.euroleague_player_consumer import EuroleaguePlayerConsumer
+from src.flask_init import startup_app
 
 if __name__ == "__main__":
     player_consumer = EuroleaguePlayerConsumer()
-    game_consumer = EuroleagueGameConsumer()
 
-    executor = ThreadPoolExecutor(max_workers=3)
+    executor = ThreadPoolExecutor(max_workers=2)
 
     executor.submit(player_consumer.consume)
-    executor.submit(game_consumer.consume)
-    #executor.submit(startup_app)
+    executor.submit(startup_app)
 
     executor.shutdown(wait=True)
-
