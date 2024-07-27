@@ -3,6 +3,7 @@ package com.example.master_thesis.scheduler;
 import com.example.master_thesis.api.EuroleagueApi;
 import com.example.master_thesis.api.dto.PlayerStatisticsDto;
 import com.example.master_thesis.api.mapper.PlayerGameMapper;
+import com.example.master_thesis.aws.publisher.PlayerDetailsPublisher;
 import com.example.master_thesis.persistance.model.Game;
 import com.example.master_thesis.service.GameService;
 import com.example.master_thesis.service.PlayerGameService;
@@ -24,6 +25,7 @@ public class EuroleagueApiScheduler {
     private final PlayerService playerService;
     private final PlayerGameService playerGameService;
     private final EuroleagueScraperProperties euroleagueScraperProperties;
+    private final PlayerDetailsPublisher playerDetailsPublisher;
 
     public static final int GAME_SCRAPER_LIMIT = 10000;
     public static final String PLAYER_NAME_SEPARATOR = ",";
@@ -44,7 +46,9 @@ public class EuroleagueApiScheduler {
             seasonService.updateSeason(currentSeason);
             log.info("Finished collecting boxscore data for season year {}", currentSeason.getYear());
         }
+        // FIRE OFF EVENT AND CREATE LISTENERS FOR IT
         //playerService.calculatePlayersAverages();
+        playerDetailsPublisher.startPublishingWithDelay(0);
     }
 
     //TODO Think about caching player and teams data not to fetch data from database everytime

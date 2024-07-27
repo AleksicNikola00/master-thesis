@@ -3,10 +3,14 @@ package com.example.master_thesis.service;
 import com.example.master_thesis.persistance.model.Player;
 import com.example.master_thesis.persistance.repository.PlayerRepository;
 import com.example.master_thesis.utils.NumberUtils;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +32,10 @@ public class PlayerService {
             player.setLastName(lastname);
 
         return playerRepository.save(player);
+    }
+
+    public List<Player> getPlayersWithoutImage(int page, int count) {
+        return playerRepository.findByImageUrlIsNullOrderByIdAsc(PageRequest.of(page, count));
     }
 
     public void calculatePlayersAverages() {
@@ -100,4 +108,10 @@ public class PlayerService {
         player.setAveragePlusMinus(NumberUtils.round((double) totalPlusMinus / totalGames, 2));
     }
 
+    @Transactional
+    public void updatePlayerImage(Long id, String imageUrl) {
+        var player = playerRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        player.setImageUrl(imageUrl);
+        playerRepository.save(player);
+    }
 }

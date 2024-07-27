@@ -8,5 +8,5 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("localstack.sqs")
 @Data
 public class AwsLocalStackProperties {
-    private String euroleaguePlayers;
+    private String euroleaguePlayersRequest;
 }

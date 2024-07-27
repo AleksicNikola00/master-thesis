@@ -1,7 +1,7 @@
 package com.example.master_thesis.controller;
 
 import com.example.master_thesis.aws.publisher.PlayerDetailsPublisher;
-import com.example.master_thesis.aws.publisher.dto.PlayerDto;
+import com.example.master_thesis.aws.publisher.event.PlayerEventDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +18,8 @@ public class TestController {
 
 
     @PostMapping
-    public ResponseEntity<Void> publishUserToQue(@RequestBody PlayerDto playerDto) {
-        playerDetailsPublisher.publishToQue(playerDto);
+    public ResponseEntity<Void> publishUserToQue(@RequestBody PlayerEventDto playerEventDto) {
+        playerDetailsPublisher.publishToQue(playerEventDto);
         return ResponseEntity.accepted().build();
     }
 }

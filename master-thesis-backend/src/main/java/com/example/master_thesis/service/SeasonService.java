@@ -17,7 +17,7 @@ public class SeasonService {
         var optionalUncompletedSeason = seasonRepository.findTopByOrderByYearDesc();
         if (optionalUncompletedSeason.isPresent()) {
             var existingSeason = optionalUncompletedSeason.get();
-            //If the last season is completed start from next year
+            // If the last season is completed start from next year
             if (existingSeason.isCompleted())
                 year = existingSeason.getYear() + 1;
             else return existingSeason;
@@ -33,8 +33,8 @@ public class SeasonService {
     }
 
     @Transactional
-    public Season updateSeason(Season season) {
-        return seasonRepository.save(season);
+    public void updateSeason(Season season) {
+        seasonRepository.save(season);
     }
 
     public Season getSeasonByYear(int year) {

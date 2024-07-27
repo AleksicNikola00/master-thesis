@@ -13,4 +13,6 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
     Optional<Player> findByEuroleagueId(String euroleagueId);
 
     List<Player> findByOrderByIdAsc(Pageable pageable);
+
+    List<Player> findByImageUrlIsNullOrderByIdAsc(Pageable pageable);
 }

@@ -1,11 +1,13 @@
+import json
+
 from src.sqs.config import sqs
 
 
-def read_messages(que_url, process_callback):
+def handle_message(que_url, process_callback):
     response = sqs.receive_message(
-            QueueUrl=que_url,
-            MaxNumberOfMessages=1,
-            WaitTimeSeconds=10
+        QueueUrl=que_url,
+        MaxNumberOfMessages=1,
+        WaitTimeSeconds=5
     )
 
     messages = response.get('Messages', [])
@@ -15,9 +17,10 @@ def read_messages(que_url, process_callback):
         return
 
     for message in messages:
-        print('Received message:', message['Body'])
+        print('Received message:', message)
 
-        process_callback(message)
+        message_content = json.loads(message['Body'])
+        process_callback(message_content)
 
         delete_message(que_url, message['ReceiptHandle'])
 
@@ -25,7 +28,7 @@ def read_messages(que_url, process_callback):
 def send_message(queue_url, message):
     response = sqs.send_message(
         QueueUrl=queue_url,
-        MessageBody=message
+        MessageBody=json.dumps(message)
     )
     return response['MessageId']
 
