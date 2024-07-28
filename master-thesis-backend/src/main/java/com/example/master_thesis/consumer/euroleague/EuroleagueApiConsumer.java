@@ -1,9 +1,9 @@
-package com.example.master_thesis.scheduler;
+package com.example.master_thesis.consumer.euroleague;
 
 import com.example.master_thesis.api.EuroleagueApi;
 import com.example.master_thesis.api.dto.PlayerStatisticsDto;
 import com.example.master_thesis.api.mapper.PlayerGameMapper;
-import com.example.master_thesis.aws.publisher.PlayerDetailsPublisher;
+import com.example.master_thesis.consumer.event.ScrapingCompletedEvent;
 import com.example.master_thesis.persistance.model.Game;
 import com.example.master_thesis.service.GameService;
 import com.example.master_thesis.service.PlayerGameService;
@@ -12,20 +12,21 @@ import com.example.master_thesis.service.SeasonService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class EuroleagueApiScheduler {
+public class EuroleagueApiConsumer {
     private final EuroleagueApi euroleagueApi;
     private final SeasonService seasonService;
     private final GameService gameService;
     private final PlayerService playerService;
     private final PlayerGameService playerGameService;
-    private final EuroleagueScraperProperties euroleagueScraperProperties;
-    private final PlayerDetailsPublisher playerDetailsPublisher;
+    private final EuroleagueApiProperties euroleagueApiProperties;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     public static final int GAME_SCRAPER_LIMIT = 10000;
     public static final String PLAYER_NAME_SEPARATOR = ",";
@@ -33,29 +34,33 @@ public class EuroleagueApiScheduler {
     @EventListener(ApplicationReadyEvent.class)
     public void collectBoxScoreData() {
         log.info("Collecting boxscore data");
-        var startingSeasonYear = euroleagueScraperProperties.getStartingSeason();
+        var startingSeasonYear = euroleagueApiProperties.getStartingSeason();
+        var collectedAdditionalData = false;
         while (true) {
             var currentSeason = seasonService.getFirstUncompletedSeason(startingSeasonYear);
-            var collectedGamesNumber = collectGamesData(currentSeason.getYear());
+            var collectedGamesNumber = collectGamesData(currentSeason.getYear(), currentSeason.getGamesCount());
             if (collectedGamesNumber <= 1) {
                 log.info("Finished collecting boxscore data");
                 break;
             }
+            collectedAdditionalData = true;
             currentSeason.setGamesCount(collectedGamesNumber);
             currentSeason.setCompleted(true);
             seasonService.updateSeason(currentSeason);
             log.info("Finished collecting boxscore data for season year {}", currentSeason.getYear());
         }
-        // FIRE OFF EVENT AND CREATE LISTENERS FOR IT
-        //playerService.calculatePlayersAverages();
-        playerDetailsPublisher.startPublishingWithDelay(0);
+
+        applicationEventPublisher.publishEvent(ScrapingCompletedEvent.builder()
+                .hadAdditionalData(true)
+                .build());
     }
 
-    //TODO Think about caching player and teams data not to fetch data from database everytime
-    private int collectGamesData(int seasonYear) {
+    private int collectGamesData(int seasonYear, int gamesCount) {
         try {
-            for (int gameNumber = 1; gameNumber < GAME_SCRAPER_LIMIT; gameNumber++) {
-                var boxscoreDto = euroleagueApi.getBoxScore(gameNumber, euroleagueScraperProperties.getPrefix() + seasonYear);
+            // Add logic to start from
+            int startGameNumber = gamesCount == 0 ? 1 : gamesCount;
+            for (int gameNumber = startGameNumber; gameNumber < GAME_SCRAPER_LIMIT; gameNumber++) {
+                var boxscoreDto = euroleagueApi.getBoxScore(gameNumber, euroleagueApiProperties.getPrefix() + seasonYear);
                 if (boxscoreDto == null)
                     return gameNumber;
 

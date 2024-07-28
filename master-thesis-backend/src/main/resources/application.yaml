@@ -27,9 +27,9 @@ spring:
         endpoint: ${LOCALSTACK_URL}
 
 euroleague:
-  scraper:
-    prefix: ${EUROLEAGUE_SCRAPER_PREFIX}
-    starting-season: ${EUROLEAGUE_SCRAPER_STARTING_SEASON}
+  api:
+    prefix: ${EUROLEAGUE_API_PREFIX}
+    starting-season: ${EUROLEAGUE_API_STARTING_SEASON}
 
 localstack:
   sqs:

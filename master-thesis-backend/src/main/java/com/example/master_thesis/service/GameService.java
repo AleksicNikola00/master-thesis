@@ -23,6 +23,7 @@ public class GameService {
                 .awayTeam(awayTeam)
                 .season(season)
                 .build();
+
         return gameRepository.save(newGame);
     }
 }

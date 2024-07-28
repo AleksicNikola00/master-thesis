@@ -1,4 +1,4 @@
-package com.example.master_thesis.scheduler;
+package com.example.master_thesis.consumer.euroleague;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-@ConfigurationProperties("euroleague.scraper")
+@ConfigurationProperties("euroleague.api")
 @Data
-public class EuroleagueScraperProperties {
+public class EuroleagueApiProperties {
     private String prefix;
     private int startingSeason;
 }
