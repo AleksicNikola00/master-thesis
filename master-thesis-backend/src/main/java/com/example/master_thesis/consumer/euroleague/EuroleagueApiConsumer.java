@@ -51,7 +51,7 @@ public class EuroleagueApiConsumer {
         }
 
         applicationEventPublisher.publishEvent(ScrapingCompletedEvent.builder()
-                .hadAdditionalData(true)
+                .hadAdditionalData(collectedAdditionalData)
                 .build());
     }
 
