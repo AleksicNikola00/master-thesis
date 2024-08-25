@@ -10,4 +10,4 @@ if __name__ == "__main__":
     # executor.submit(startup_app)
     #
     # executor.shutdown(wait=True)
-    scrape_articles()
+    scrape_articles("ID", "TYLER", "CAVANAUGH")
