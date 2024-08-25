@@ -11,7 +11,7 @@ ALTER TABLE basketball_player_article
 
 ALTER TABLE basketball_player
     ADD article_count INTEGER NOT NULL 
-        DEFAULT 0
+        DEFAULT 0;
 
 CREATE OR REPLACE FUNCTION update_article_count()
 RETURNS TRIGGER AS $$

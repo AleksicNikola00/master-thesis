@@ -24,11 +24,12 @@ public class GetPlayerArticlesConsumer {
     private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     public static final int PLAYER_PAGE_SIZE = 5;
-    public static final int MAX_PLAYER_PAGE = 10;
-    public static final long DELAY_PERIOD_SECONDS = 10;
+    public static final int MAX_PLAYER_PAGE = 30;
+    public static final long DELAY_PERIOD_SECONDS = 20;
 
 
     @EventListener
+    //(condition = "#event.hadAdditionalData()")
     @Async
     public void getPlayerArticles(ScrapingPlayerGamesCompletedEvent event) {
         startPublishingWithDelay(0);

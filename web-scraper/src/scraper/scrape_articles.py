@@ -33,10 +33,6 @@ def scrape_articles(player_id, first_name, last_name, article_number=5):
     total_scraped_articles += scrape_newspaper_articles(player_id, first_name, last_name,
                                                         article_number - total_scraped_articles)
 
-    if total_scraped_articles == 0:
-        raise Exception("No articles scraped for player [{}] with id [{}]".format(
-            first_name + " " + last_name, player_id))
-
     if total_scraped_articles < article_number:
         print("Only {} articles scraped for player [{}] with id [{}]".format(total_scraped_articles,
                                                                              first_name + " " + last_name, player_id))

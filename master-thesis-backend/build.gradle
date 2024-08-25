@@ -34,7 +34,7 @@ dependencies {
 
     implementation("org.postgresql:postgresql:42.7.3")
 
-    implementation("org.flywaydb:flyway-core:10.15.0")
+    implementation("org.flywaydb:flyway-core:10.17.2")
 
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 
@@ -44,7 +44,7 @@ dependencies {
 
 
     // https://mvnrepository.com/artifact/org.flywaydb/flyway-database-postgresql
-    runtimeOnly("org.flywaydb:flyway-database-postgresql:10.15.0")
+    runtimeOnly 'org.flywaydb:flyway-database-postgresql:10.17.2'
 
 
     compileOnly 'org.projectlombok:lombok'
