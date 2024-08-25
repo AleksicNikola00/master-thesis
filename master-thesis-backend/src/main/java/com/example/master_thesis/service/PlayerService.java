@@ -34,6 +34,10 @@ public class PlayerService {
         return playerRepository.findByImageUrlIsNullOrderByIdAsc(PageRequest.of(page, count));
     }
 
+    public List<Player> getPlayersWithoutArticles(int page, int count) {
+        return playerRepository.findByNoArticles(PageRequest.of(page, count));
+    }
+
     public List<Player> getPlayersPageable(int page, int count) {
         return playerRepository.findByOrderByIdAsc(PageRequest.of(page, count));
     }

@@ -14,6 +14,7 @@ public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private int articleCount;
     private String euroleagueId;
     private String firstName;
     private String lastName;

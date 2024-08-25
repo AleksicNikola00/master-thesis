@@ -29,20 +29,29 @@ sitesUrlMap = {
 def scrape_articles(player_id, first_name, last_name, article_number=5):
     print("Scraping [{}] articles  for player [{}] with id [{}]".format(article_number,
                                                                         first_name + " " + last_name, player_id))
-    scraped_wiki_articles = scrape_wikipedia_article(player_id, first_name, last_name)
-    article_number -= scraped_wiki_articles
-    scrape_newspaper_articles(player_id, first_name, last_name, article_number)
+    total_scraped_articles = scrape_wikipedia_article(player_id, first_name, last_name)
+    total_scraped_articles += scrape_newspaper_articles(player_id, first_name, last_name,
+                                                        article_number - total_scraped_articles)
+
+    if total_scraped_articles == 0:
+        raise Exception("No articles scraped for player [{}] with id [{}]".format(
+            first_name + " " + last_name, player_id))
+
+    if total_scraped_articles < article_number:
+        print("Only {} articles scraped for player [{}] with id [{}]".format(total_scraped_articles,
+                                                                             first_name + " " + last_name, player_id))
+
     print("Ended scraping articles  for player [{}] with id [{}]".format(
         first_name + " " + last_name, player_id))
 
 
 def scrape_wikipedia_article(player_id, first_name, last_name):
-    """Scrapes wikipedia article and sends it to SQS
+    """Scrapes wikipedia article
 
         Returns
         -------
         number
-            a number of scraped and sent articles
+            a number of scraped articles
         """
     try:
         wikipedia_url = get_search_url(first_name, last_name, site=ScrapedSites.WIKIPEDIA)
@@ -81,6 +90,14 @@ def scrape_wikipedia_article(player_id, first_name, last_name):
 
 
 def scrape_newspaper_articles(player_id, first_name, last_name, article_number):
+    """Scrapes newspaper article
+
+            Returns
+            -------
+            number
+                a number of scraped articles
+            """
+    total_scraped_articles = 0
     try:
         search_url = get_search_url(first_name, last_name)
         response = requests.get(search_url)
@@ -89,24 +106,18 @@ def scrape_newspaper_articles(player_id, first_name, last_name, article_number):
 
         articles = soup.find_all('article')
 
-        for article_element, _ in zip(articles, range(article_number)):
+        for article_element, article_index in zip(articles, range(article_number)):
             a_tag = article_element.find('a', href=True)
             link = a_tag['href']
             article = get_article_content(link)
             send_article_to_sqs(player_id, article.text, link)
+            total_scraped_articles += 1
 
         print("Successfully scraped and sent EuroHoops articles about [{}]".format(first_name + " " + last_name))
     except Exception as e:
         print("An error occurred while parsing EuroHoops articles about [{}]: {}".format(first_name, last_name), e)
-
-
-def send_article_to_sqs(player_id, article_content, article_url):
-    player_article_event = {
-        'player_id': player_id,
-        'article_content': article_content,
-        'article_url': article_url
-    }
-    send_message(WRITE_QUEUE_URL, player_article_event)
+    finally:
+        return total_scraped_articles
 
 
 def get_search_url(first_name, last_name, site=ScrapedSites.EURO_HOOPS):
@@ -120,3 +131,12 @@ def get_article_content(url):
     article.download()
     article.parse()
     return article
+
+
+def send_article_to_sqs(player_id, article_content, article_url):
+    player_article_event = {
+        'id': player_id,
+        'articleContent': article_content,
+        'articleUrl': article_url
+    }
+    send_message(WRITE_QUEUE_URL, player_article_event)

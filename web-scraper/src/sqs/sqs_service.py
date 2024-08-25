@@ -20,7 +20,11 @@ def handle_message(que_url, process_callback):
         print('Received message:', message)
 
         message_content = json.loads(message['Body'])
-        process_callback(message_content)
+        try:
+            process_callback(message_content)
+        except Exception as e:
+            print("Error occurred while processing message [{}] on que[{}] : {}".format(message_content, que_url, e))
+            raise e
 
         delete_message(que_url, message['ReceiptHandle'])
 

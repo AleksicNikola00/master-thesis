@@ -33,5 +33,5 @@ euroleague:
 
 localstack:
   sqs:
-    euroleague-players-request: ${LOCALSTACK_SQS_EUROLEAGUE_PLAYER_REQUEST}
-    euroleague-players-response: ${LOCALSTACK_SQS_EUROLEAGUE_PLAYER_RESPONSE}
+    euroleague-players-image-request: ${LOCALSTACK_SQS_EUROLEAGUE_PLAYER_REQUEST}
+    euroleague-players-image-response: ${LOCALSTACK_SQS_EUROLEAGUE_PLAYER_RESPONSE}

@@ -9,7 +9,7 @@ class BaseConsumer(ABC):
         self.queue_url = queue_url
 
     @abstractmethod
-    def process(self, message):
+    def process(self, message_content):
         pass
 
     def consume(self):

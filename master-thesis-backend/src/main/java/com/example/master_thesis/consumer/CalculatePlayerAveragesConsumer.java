@@ -1,6 +1,6 @@
 package com.example.master_thesis.consumer;
 
-import com.example.master_thesis.consumer.event.ScrapingCompletedEvent;
+import com.example.master_thesis.consumer.event.ScrapingPlayerGamesCompletedEvent;
 import com.example.master_thesis.persistance.model.Player;
 import com.example.master_thesis.service.PlayerGameService;
 import com.example.master_thesis.service.PlayerService;
@@ -23,7 +23,7 @@ public class CalculatePlayerAveragesConsumer {
 
     @EventListener(condition = "#event.hadAdditionalData()")
     @Async
-    public void calculatePlayerAverages(ScrapingCompletedEvent event) {
+    public void calculatePlayerAverages(ScrapingPlayerGamesCompletedEvent event) {
         for (int pageNumber = 0; pageNumber < Integer.MAX_VALUE; pageNumber++) {
             var players = playerService.getPlayersPageable(pageNumber, PLAYER_PAGE_SIZE);
             if (players.isEmpty()) {

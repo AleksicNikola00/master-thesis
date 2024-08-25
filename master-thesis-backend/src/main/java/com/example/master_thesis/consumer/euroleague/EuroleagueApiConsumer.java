@@ -3,7 +3,7 @@ package com.example.master_thesis.consumer.euroleague;
 import com.example.master_thesis.api.EuroleagueApi;
 import com.example.master_thesis.api.dto.PlayerStatisticsDto;
 import com.example.master_thesis.api.mapper.PlayerGameMapper;
-import com.example.master_thesis.consumer.event.ScrapingCompletedEvent;
+import com.example.master_thesis.consumer.event.ScrapingPlayerGamesCompletedEvent;
 import com.example.master_thesis.persistance.model.Game;
 import com.example.master_thesis.service.GameService;
 import com.example.master_thesis.service.PlayerGameService;
@@ -50,7 +50,7 @@ public class EuroleagueApiConsumer {
             log.info("Finished collecting boxscore data for season year {}", currentSeason.getYear());
         }
 
-        applicationEventPublisher.publishEvent(ScrapingCompletedEvent.builder()
+        applicationEventPublisher.publishEvent(ScrapingPlayerGamesCompletedEvent.builder()
                 .hadAdditionalData(collectedAdditionalData)
                 .build());
     }
