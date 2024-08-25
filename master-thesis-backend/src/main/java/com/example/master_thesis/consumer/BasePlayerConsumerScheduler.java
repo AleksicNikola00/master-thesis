@@ -15,22 +15,18 @@ public abstract class BasePlayerConsumerScheduler {
     protected final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     protected final int playerPageSize;
     protected final int maxPlayerPage;
-    protected final int delayInSeconds;
+    protected final long delayInSeconds;
     protected final String processName;
 
-    abstract List<Player> getPlayers();
+    abstract List<Player> getPlayers(int page, int count);
 
-    abstract void processPlayers(List<Player> player);
-
-    void startProcessing() {
-        startProcessingWithDelay(0);
-    }
+    abstract void processPlayers(List<Player> players);
 
     void startProcessingWithDelay(int pageNumber) {
         if (pageNumber > maxPlayerPage)
             pageNumber = 0;
 
-        var players = getPlayers();
+        var players = getPlayers(pageNumber, playerPageSize);
         if (players.isEmpty()) {
             if (pageNumber == 0) {
                 log.info("Player process {} finished!", processName);
