@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 @Slf4j
-public abstract class BasePlayerConsumerScheduler {
+public abstract class BasePlayerConsumer {
     protected final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     protected final int playerPageSize;
     protected final int maxPlayerPage;

@@ -15,7 +15,7 @@ import java.util.List;
 
 @Component
 @Slf4j
-public class GetPlayerImagesConsumer extends BasePlayerConsumerScheduler {
+public class GetPlayerImagesConsumer extends BasePlayerConsumer {
 
     private final PlayerImagePublisher playerImagePublisher;
     private final PlayerService playerService;

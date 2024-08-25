@@ -14,7 +14,7 @@ import java.util.List;
 
 @Component
 @Slf4j
-public class GetPlayerArticlesConsumer extends BasePlayerConsumerScheduler {
+public class GetPlayerArticlesConsumer extends BasePlayerConsumer {
 
     private final PlayerService playerService;
     private final PlayerArticlePublisher playerArticlePublisher;
