@@ -31,7 +31,8 @@ public class GetPlayerArticlesConsumer extends BasePlayerConsumer {
     }
 
 
-    @EventListener(condition = "#event.hadAdditionalData()")
+    @EventListener
+    //(condition = "#event.hadAdditionalData()")
     @Async
     public void getPlayerArticles(ScrapingPlayerGamesCompletedEvent event) {
         startProcessingWithDelay(0);

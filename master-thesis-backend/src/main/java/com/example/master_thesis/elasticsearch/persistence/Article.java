@@ -2,6 +2,7 @@ package com.example.master_thesis.elasticsearch.persistence;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -10,6 +11,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Document(indexName = "article")
 @Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Article {

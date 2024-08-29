@@ -25,10 +25,7 @@ public class PlayerArticleService {
         }
 
         var player = playerRepository.findById(playerId).orElseThrow(EntityNotFoundException::new);
-        var playerArticle = PlayerArticle.builder()
-                .player(player)
-                .articleUrl(articleUrl)
-                .build();
+
 
         var article = Article.builder()
                 .playerFirstName(player.getFirstName())
@@ -37,9 +34,14 @@ public class PlayerArticleService {
                 .articleUrl(articleUrl)
                 .build();
 
-        articleRepository.save(article);
+        var savedArticle = articleRepository.save(article);
 
-        log.info("Article url for player with id [{}]: {}", playerId, articleUrl);
+        var playerArticle = PlayerArticle.builder()
+                .player(player)
+                .articleUrl(articleUrl)
+                .articleId(savedArticle.getId())
+                .build();
+
         playerArticleRepository.save(playerArticle);
     }
 }

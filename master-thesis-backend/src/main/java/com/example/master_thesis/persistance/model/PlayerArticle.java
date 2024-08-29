@@ -14,8 +14,12 @@ public class PlayerArticle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @ManyToOne
     @JoinColumn(name = "player_id")
-    Player player;
-    String articleUrl;
+    private Player player;
+
+    private String articleId;
+
+    private String articleUrl;
 }
