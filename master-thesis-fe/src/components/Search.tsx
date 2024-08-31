@@ -41,6 +41,7 @@ const Search = (): ReactElement => {
           <TextField
             {...params}
             label="Search for a player"
+            size="small"
             slotProps={{
               htmlInput: {
                 ...params.inputProps,
