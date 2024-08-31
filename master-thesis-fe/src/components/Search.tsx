@@ -3,15 +3,11 @@ import { ReactElement } from "react";
 
 const options = [
   {
-    code: "AD",
-    label: "Andorra",
-    phone: "376",
+    label: "Tyler Dorsy",
     src: "https://media-cdn.incrowdsports.com/24f75c32-e4db-499d-b2e6-d46f52986033.png",
   },
   {
-    code: "AE",
-    label: "United Arab Emirates",
-    phone: "971",
+    label: "Kevin Spacey",
     src: "https://media-cdn.incrowdsports.com/24f75c32-e4db-499d-b2e6-d46f52986033.png",
   },
 ];
@@ -30,9 +26,7 @@ const Search = (): ReactElement => {
             <Box key={key} component="li" {...optionProps}>
               <div className="flex gap-2 items-center">
                 <img loading="lazy" width="40" src={option.src} alt="" />
-                <div className="flex">
-                  {option.label} ({option.code}) +{option.phone}
-                </div>
+                <div className="flex">{option.label}</div>
               </div>
             </Box>
           );
