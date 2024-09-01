@@ -1,6 +1,7 @@
 package com.example.master_thesis.service;
 
-import com.example.master_thesis.persistance.model.Player;
+import com.example.master_thesis.persistance.model.player.Player;
+import com.example.master_thesis.persistance.model.player.projection.PlayerBaseInfoProjection;
 import com.example.master_thesis.persistance.repository.PlayerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.List;
 @Slf4j
 public class PlayerService {
 
+    public int PLAYER_PAGE_COUNT = 10;
     private final PlayerRepository playerRepository;
 
     public Player createPlayer(String euroleagueId, String firstname, String lastname) {
@@ -50,5 +52,9 @@ public class PlayerService {
         var player = playerRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         player.setImageUrl(imageUrl);
         playerRepository.save(player);
+    }
+
+    public List<PlayerBaseInfoProjection> searchPlayerByNamePageable(String playerName, Integer page) {
+        return playerRepository.findByName(playerName, PageRequest.of(page, PLAYER_PAGE_COUNT));
     }
 }

@@ -1,4 +1,4 @@
-package com.example.master_thesis.config;
+package com.example.master_thesis.elasticsearch.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;

@@ -1,7 +1,7 @@
 package com.example.master_thesis.consumer;
 
 import com.example.master_thesis.consumer.event.ScrapingPlayerGamesCompletedEvent;
-import com.example.master_thesis.persistance.model.Player;
+import com.example.master_thesis.persistance.model.player.Player;
 import com.example.master_thesis.service.PlayerGameService;
 import com.example.master_thesis.service.PlayerService;
 import com.example.master_thesis.utils.NumberUtils;

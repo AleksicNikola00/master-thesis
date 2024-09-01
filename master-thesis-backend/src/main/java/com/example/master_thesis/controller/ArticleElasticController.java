@@ -1,7 +1,7 @@
 package com.example.master_thesis.controller;
 
-import com.example.master_thesis.elasticsearch.persistence.Article;
-import com.example.master_thesis.elasticsearch.service.ArticleService;
+import com.example.master_thesis.elasticsearch.persistence.ArticleElastic;
+import com.example.master_thesis.elasticsearch.service.ArticleElasticService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/article")
 @RequiredArgsConstructor
-public class ArticleController {
-    private final ArticleService articleService;
+public class ArticleElasticController {
+    private final ArticleElasticService articleElasticService;
 
     @GetMapping()
-    public ResponseEntity<SearchHits<Article>> getArticleHits(@RequestParam String query) {
-        return ResponseEntity.ok(articleService.getByQuery(query));
+    public ResponseEntity<SearchHits<ArticleElastic>> getArticleHits(@RequestParam String query) {
+        return ResponseEntity.ok(articleElasticService.getByQuery(query));
     }
 }

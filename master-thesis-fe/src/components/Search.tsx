@@ -20,6 +20,7 @@ const Search = (): ReactElement => {
         sx={{ width: 300 }}
         options={options}
         autoHighlight
+        filterOptions={(options, _) => options}
         renderOption={(props, option) => {
           const { key, ...optionProps } = props;
           return (

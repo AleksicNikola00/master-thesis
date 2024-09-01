@@ -1,6 +1,6 @@
 package com.example.master_thesis.consumer;
 
-import com.example.master_thesis.persistance.model.Player;
+import com.example.master_thesis.persistance.model.player.Player;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

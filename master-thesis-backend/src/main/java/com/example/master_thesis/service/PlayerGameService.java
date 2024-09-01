@@ -1,7 +1,7 @@
 package com.example.master_thesis.service;
 
 
-import com.example.master_thesis.persistance.model.PlayerGame;
+import com.example.master_thesis.persistance.model.player.PlayerGame;
 import com.example.master_thesis.persistance.repository.PlayerGameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.example.master_thesis.persistance.model;
+package com.example.master_thesis.persistance.model.player;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -3,7 +3,7 @@ package com.example.master_thesis.consumer;
 import com.example.master_thesis.aws.publisher.PlayerArticlePublisher;
 import com.example.master_thesis.aws.publisher.event.PlayerArticleEventRequestDto;
 import com.example.master_thesis.consumer.event.ScrapingPlayerGamesCompletedEvent;
-import com.example.master_thesis.persistance.model.Player;
+import com.example.master_thesis.persistance.model.player.Player;
 import com.example.master_thesis.service.PlayerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -31,8 +31,7 @@ public class GetPlayerArticlesConsumer extends BasePlayerConsumer {
     }
 
 
-    @EventListener
-    //(condition = "#event.hadAdditionalData()")
+    @EventListener(condition = "#event.hadAdditionalData()")
     @Async
     public void getPlayerArticles(ScrapingPlayerGamesCompletedEvent event) {
         startProcessingWithDelay(0);

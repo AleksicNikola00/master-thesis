@@ -1,6 +1,6 @@
 package com.example.master_thesis.persistance.repository;
 
-import com.example.master_thesis.persistance.model.PlayerArticle;
+import com.example.master_thesis.persistance.model.player.PlayerArticle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

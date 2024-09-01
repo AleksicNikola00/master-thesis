@@ -2,8 +2,8 @@ package com.example.master_thesis.api.mapper;
 
 import com.example.master_thesis.api.dto.PlayerStatisticsDto;
 import com.example.master_thesis.persistance.model.Game;
-import com.example.master_thesis.persistance.model.Player;
-import com.example.master_thesis.persistance.model.PlayerGame;
+import com.example.master_thesis.persistance.model.player.Player;
+import com.example.master_thesis.persistance.model.player.PlayerGame;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
