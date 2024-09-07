@@ -3,7 +3,7 @@ import { Header } from "../components";
 
 const MainLayout = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col px-10">
       <Header />
       <main className="w-100% p-10 h-screen ">
         <Outlet /> {/* Nested routes will be rendered here */}

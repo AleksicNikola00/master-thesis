@@ -1,2 +1,2 @@
-export * from './HomePage'
-export * from './PlayerDetailsPage'
+export * from "./homepage/HomePage";
+export * from "./PlayerDetailsPage";
