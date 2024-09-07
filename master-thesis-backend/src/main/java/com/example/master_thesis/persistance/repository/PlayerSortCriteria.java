@@ -11,7 +11,8 @@ public enum PlayerSortCriteria {
     AVERAGE_ASSISTS("averageAssists"),
     AVERAGE_STEALS("averageSteals"),
     AVERAGE_TURNOVERS("averageTurnovers"),
-    AVERAGE_REBOUNDS("averageRebounds");
+    AVERAGE_REBOUNDS("averageRebounds"),
+    AVERAGE_PLUS_MINUS("averagePlusMinus");
 
     private final String fieldName;
 }

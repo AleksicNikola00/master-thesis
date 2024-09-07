@@ -1,14 +1,15 @@
 import { useMemo } from "react";
-import { CarousellPlayer } from "../pages/homepage/components/PlayerCarousell";
-import { PlayerAveragesKey, PlayerDetails, usePlayerSort } from "../service";
+import { CarousellPlayer } from "../pages/homepage/components/PlayerCarousel";
+import {
+  PlayerAveragesKey,
+  PlayerDetails,
+  SortCriteria,
+  usePlayerSort,
+} from "../service";
+import { toCamelCase } from "../utils";
 
 type UseTopPlayersResponse = {
-  mostPointsCarouselPlayers?: CarousellPlayer[];
-  mostAssitsCarouselPlayers?: CarousellPlayer[];
-  mostMinutesCarouselPlayers?: CarousellPlayer[];
-  mostStealsCarouselPlayers?: CarousellPlayer[];
-  mostTurnoversCarouselPlayers?: CarousellPlayer[];
-  mostReboundsCarouselPlayers?: CarousellPlayer[];
+  carouselPlayers?: CarousellPlayer[];
 };
 
 const mapPlayerDetailsToCarouselPlayers = (
@@ -22,61 +23,26 @@ const mapPlayerDetailsToCarouselPlayers = (
     imageUrl: player.imageUrl,
   }));
 
-export const useTopPlayers = (): UseTopPlayersResponse => {
-  const { data: mostPointsPlayers } = usePlayerSort("AVERAGE_POINTS");
-  const { data: mostAssitsPlayers } = usePlayerSort("AVERAGE_ASSISTS");
-  const { data: mostMinutesPlayers } = usePlayerSort("AVERAGE_MINUTES");
-  const { data: averageStealsPlayers } = usePlayerSort("AVERAGE_STEALS");
-  const { data: averageTurnoversPlayers } = usePlayerSort("AVERAGE_TURNOVERS");
-  const { data: averageReboundsPlayers } = usePlayerSort("AVERAGE_REBOUNDS");
+const mapSortCriteriaToPlayerAveragesKey = (
+  sortCriteria: SortCriteria
+): PlayerAveragesKey =>
+  toCamelCase(sortCriteria.toString()) as PlayerAveragesKey;
 
-  const mostPointsCarouselPlayers: CarousellPlayer[] | undefined = useMemo(
-    () => mapPlayerDetailsToCarouselPlayers("averagePoints", mostPointsPlayers),
-    [mostPointsPlayers]
-  );
+export const useTopPlayers = (
+  sortCriteria: SortCriteria
+): UseTopPlayersResponse => {
+  const { data: topPlayers } = usePlayerSort(sortCriteria);
 
-  const mostAssitsCarouselPlayers: CarousellPlayer[] | undefined = useMemo(
-    () =>
-      mapPlayerDetailsToCarouselPlayers("averageAssists", mostAssitsPlayers),
-    [mostAssitsPlayers]
-  );
-
-  const mostMinutesCarouselPlayers: CarousellPlayer[] | undefined = useMemo(
-    () =>
-      mapPlayerDetailsToCarouselPlayers("averageMinutes", mostMinutesPlayers),
-    [mostMinutesPlayers]
-  );
-
-  const mostStealsCarouselPlayers: CarousellPlayer[] | undefined = useMemo(
-    () =>
-      mapPlayerDetailsToCarouselPlayers("averageSteals", averageStealsPlayers),
-    [averageStealsPlayers]
-  );
-
-  const mostTurnoversCarouselPlayers: CarousellPlayer[] | undefined = useMemo(
+  const carouselPlayers: CarousellPlayer[] | undefined = useMemo(
     () =>
       mapPlayerDetailsToCarouselPlayers(
-        "averageTurnovers",
-        averageTurnoversPlayers
+        mapSortCriteriaToPlayerAveragesKey(sortCriteria),
+        topPlayers
       ),
-    [averageTurnoversPlayers]
-  );
-
-  const mostReboundsCarouselPlayers: CarousellPlayer[] | undefined = useMemo(
-    () =>
-      mapPlayerDetailsToCarouselPlayers(
-        "averageRebounds",
-        averageReboundsPlayers
-      ),
-    [averageReboundsPlayers]
+    [topPlayers]
   );
 
   return {
-    mostPointsCarouselPlayers,
-    mostAssitsCarouselPlayers,
-    mostMinutesCarouselPlayers,
-    mostStealsCarouselPlayers,
-    mostTurnoversCarouselPlayers,
-    mostReboundsCarouselPlayers,
+    carouselPlayers,
   };
 };

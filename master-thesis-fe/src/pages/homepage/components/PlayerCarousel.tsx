@@ -16,7 +16,7 @@ type PlayerCarousellProps = {
   players: CarousellPlayer[];
 };
 
-const PlayerCarousell = ({ title, players, label }: PlayerCarousellProps) => {
+const PlayerCarousel = ({ title, players, label }: PlayerCarousellProps) => {
   const navigate = useNavigate();
   const carouselRef = useRef<HTMLUListElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -81,7 +81,7 @@ const PlayerCarousell = ({ title, players, label }: PlayerCarousellProps) => {
               onClick={() => onPlayerClick(player.id)}
             >
               <label className="absolute top-2 left-2">{`#${index + 1}`}</label>
-              <img width="100" src={player.imageUrl} alt="" />
+              <img width="100" height="100" src={player.imageUrl} />
               <label>{player.fullName}</label>
               <div className="flex gap-5">
                 <label>{`${label}:`}</label>
@@ -103,4 +103,4 @@ const PlayerCarousell = ({ title, players, label }: PlayerCarousellProps) => {
   );
 };
 
-export default PlayerCarousell;
+export default PlayerCarousel;

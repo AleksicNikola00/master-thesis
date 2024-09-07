@@ -1,59 +1,70 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { useTopPlayers } from "../../hooks";
-import PlayerCarousell from "./components/PlayerCarousell";
+import PlayerCarousel from "./components/PlayerCarousel";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
+import { blackInputSx } from "../../components";
+import { SortCriteria } from "../../service";
+
+const sortCriteriaMap: Map<SortCriteria, string> = new Map<
+  SortCriteria,
+  string
+>([
+  ["AVERAGE_POINTS", "Points"],
+  ["AVERAGE_MINUTES", "Minutes"],
+  ["AVERAGE_ASSISTS", "Assists"],
+  ["AVERAGE_STEALS", "Steals"],
+  ["AVERAGE_TURNOVERS", "Turnovers"],
+  ["AVERAGE_REBOUNDS", "Rebounds"],
+]);
 
 export const HomePage = (): ReactElement => {
-  const {
-    mostPointsCarouselPlayers,
-    mostAssitsCarouselPlayers,
-    mostMinutesCarouselPlayers,
-    mostStealsCarouselPlayers,
-    mostTurnoversCarouselPlayers,
-    mostReboundsCarouselPlayers,
-  } = useTopPlayers();
+  const [selectedSortCriteria, setSelectedSortCriteria] =
+    useState<SortCriteria>("AVERAGE_POINTS");
+  const { carouselPlayers: carouselPlusMinusPlayers } =
+    useTopPlayers("AVERAGE_PLUS_MINUS");
+  const { carouselPlayers: carouselSelectedPlayers } =
+    useTopPlayers(selectedSortCriteria);
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setSelectedSortCriteria(event.target.value as SortCriteria);
+  };
 
   return (
     <div className="flex flex-col gap-5">
-      {mostPointsCarouselPlayers && (
-        <PlayerCarousell
-          title="Most points:"
-          label="Average Points"
-          players={mostPointsCarouselPlayers}
+      {carouselPlusMinusPlayers && (
+        <PlayerCarousel
+          title="Top Efficiency:"
+          label="Average Efficiency"
+          players={carouselPlusMinusPlayers}
         />
       )}
-      {mostAssitsCarouselPlayers && (
-        <PlayerCarousell
-          title="Most assists:"
-          label="Average Assists"
-          players={mostAssitsCarouselPlayers}
-        />
-      )}
-      {mostMinutesCarouselPlayers && (
-        <PlayerCarousell
-          title="Most minutes:"
-          label="Average Minutes"
-          players={mostMinutesCarouselPlayers}
-        />
-      )}
-      {mostStealsCarouselPlayers && (
-        <PlayerCarousell
-          title="Most steals:"
-          label="Average Steals"
-          players={mostStealsCarouselPlayers}
-        />
-      )}
-      {mostTurnoversCarouselPlayers && (
-        <PlayerCarousell
-          title="Most turnovers:"
-          label="Average Turnovers"
-          players={mostTurnoversCarouselPlayers}
-        />
-      )}
-      {mostReboundsCarouselPlayers && (
-        <PlayerCarousell
-          title="Most rebounds:"
-          label="Average Rebounds"
-          players={mostReboundsCarouselPlayers}
+      <FormControl sx={{ ...blackInputSx, width: 170 }} size="small">
+        <InputLabel>Sort Criteria</InputLabel>
+        <Select
+          labelId="demo-select-small-label"
+          id="demo-select-small"
+          value={selectedSortCriteria}
+          label="Sort Criteria"
+          onChange={handleChange}
+        >
+          {Array.from(sortCriteriaMap).map((option) => (
+            <MenuItem key={option[0]} value={option[0]}>
+              {option[1]}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      {carouselSelectedPlayers && (
+        <PlayerCarousel
+          title={`Top ${sortCriteriaMap.get(selectedSortCriteria)}:`}
+          label={`Average ${sortCriteriaMap.get(selectedSortCriteria)}`}
+          players={carouselSelectedPlayers}
         />
       )}
     </div>

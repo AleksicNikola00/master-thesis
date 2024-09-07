@@ -10,6 +10,6 @@ public record PlayerDetailedResponseDto(
         Double averageAssists,
         Double averageSteals,
         Double averageTurnovers,
-        Double averageRebounds
-) {
+        Double averageRebounds,
+        Double averagePlusMinus) {
 }

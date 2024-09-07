@@ -9,6 +9,7 @@ type PlayerAverages = {
   averageAssists: number;
   averageSteals: number;
   averageTurnovers: number;
+  averagePlusMinus: number;
 };
 
 export type PlayerAveragesKey = keyof PlayerAverages;
@@ -21,7 +22,8 @@ export type SortCriteria =
   | "AVERAGE_ASSISTS"
   | "AVERAGE_STEALS"
   | "AVERAGE_TURNOVERS"
-  | "AVERAGE_REBOUNDS";
+  | "AVERAGE_REBOUNDS"
+  | "AVERAGE_PLUS_MINUS";
 
 export const usePlayerSort = (sortCriteria: SortCriteria) => {
   return useQuery<PlayerDetails[]>({

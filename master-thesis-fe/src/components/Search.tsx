@@ -10,7 +10,7 @@ type DisplayedPlayer = {
   imageUrl: string;
 };
 
-const searchSx = {
+export const blackInputSx = {
   "& .MuiOutlinedInput-root": {
     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
       borderColor: "black",
@@ -121,7 +121,7 @@ export const Search = (): ReactElement => {
                 autoComplete: "off",
               },
             }}
-            sx={searchSx}
+            sx={blackInputSx}
           />
         )}
       />
