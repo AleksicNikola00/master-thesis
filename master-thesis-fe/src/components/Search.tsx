@@ -10,6 +10,23 @@ type DisplayedPlayer = {
   imageUrl: string;
 };
 
+const searchSx = {
+  "& .MuiOutlinedInput-root": {
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "black",
+    },
+    "& .MuiAutocomplete-input": {
+      color: "black",
+    },
+    "&.Mui-focused .MuiAutocomplete-input": {
+      color: "black",
+    },
+  },
+  "& .MuiInputLabel-root.Mui-focused": {
+    color: "black",
+  },
+};
+
 export const Search = (): ReactElement => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -104,6 +121,7 @@ export const Search = (): ReactElement => {
                 autoComplete: "off",
               },
             }}
+            sx={searchSx}
           />
         )}
       />
