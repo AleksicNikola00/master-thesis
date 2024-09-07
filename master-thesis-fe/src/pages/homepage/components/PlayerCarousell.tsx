@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type CarousellPlayer = {
   id: number;
@@ -19,6 +19,30 @@ type PlayerCarousellProps = {
 const PlayerCarousell = ({ title, players }: PlayerCarousellProps) => {
   const navigate = useNavigate();
   const carouselRef = useRef<HTMLUListElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const updateScrollButtons = () => {
+    if (!carouselRef.current) return;
+
+    const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft + 5 < scrollWidth - clientWidth);
+  };
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (carousel) {
+      carousel.addEventListener("scroll", updateScrollButtons);
+      updateScrollButtons();
+    }
+
+    return () => {
+      if (carousel) {
+        carousel.removeEventListener("scroll", updateScrollButtons);
+      }
+    };
+  }, []);
 
   const onPlayerClick = (playerId: number) => {
     navigate(`/player/${playerId}`);
@@ -35,12 +59,14 @@ const PlayerCarousell = ({ title, players }: PlayerCarousellProps) => {
     <div className="flex flex-col gap-2">
       <div className="font-semibold text-xl">{title}</div>
       <div className="flex items-center  relative py-2 px-5">
-        <button
-          className="absolute left-0 z-10 p-2 bg-white border border-gray-300 rounded-full shadow-md cursor-pointer hover:bg-gray-100"
-          onClick={() => scrollCarousel("left")}
-        >
-          <ArrowLeftIcon />
-        </button>
+        {canScrollLeft && (
+          <button
+            className="absolute left-0 z-10 p-2 bg-white border border-gray-300 rounded-full shadow-md cursor-pointer hover:bg-gray-100"
+            onClick={() => scrollCarousel("left")}
+          >
+            <ArrowLeftIcon />
+          </button>
+        )}
         <ul
           ref={carouselRef}
           className="flex overflow-x-auto scroll-smooth no-scrollbar gap-5 justify-around w-full py-2 px-4"
@@ -64,12 +90,14 @@ const PlayerCarousell = ({ title, players }: PlayerCarousellProps) => {
             </li>
           ))}
         </ul>
-        <button
-          className="absolute right-0 z-10 p-2 bg-white border border-gray-300 rounded-full shadow-md cursor-pointer hover:bg-gray-100"
-          onClick={() => scrollCarousel("right")}
-        >
-          <ArrowRightIcon />
-        </button>
+        {canScrollRight && (
+          <button
+            className="absolute right-0 z-10 p-2 bg-white border border-gray-300 rounded-full shadow-md cursor-pointer hover:bg-gray-100"
+            onClick={() => scrollCarousel("right")}
+          >
+            <ArrowRightIcon />
+          </button>
+        )}
       </div>
     </div>
   );
