@@ -55,6 +55,6 @@ public class PlayerService {
     }
 
     public List<PlayerBaseInfoProjection> searchPlayerByNamePageable(String playerName, Integer page) {
-        return playerRepository.findByName(playerName, PageRequest.of(page, PLAYER_PAGE_COUNT));
+        return playerRepository.findByName(playerName.toLowerCase(), PageRequest.of(page, PLAYER_PAGE_COUNT));
     }
 }

@@ -1,8 +1,8 @@
-import { useState, ChangeEvent, ReactElement, useMemo } from "react";
-import { Autocomplete, TextField, Box } from "@mui/material"; // Make sure these imports are correct for your setup
+import { useState, useEffect, ChangeEvent, ReactElement, useMemo } from "react";
+import { Autocomplete, TextField, Box } from "@mui/material";
 import { useDebounce } from "../hooks";
 import { usePlayerSearch } from "../service";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 type DisplayedPlayer = {
   id: number;
@@ -12,6 +12,11 @@ type DisplayedPlayer = {
 
 export const Search = (): ReactElement => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const [selectedPlayer, setSelectedPlayer] = useState<DisplayedPlayer | null>(
+    null
+  );
   const [playerName, setPlayerName] = useState<string>("");
   const debouncedPlayerName = useDebounce<string>(playerName, 500);
 
@@ -29,12 +34,33 @@ export const Search = (): ReactElement => {
 
   const emptyOptionsText = useMemo(() => {
     if (!debouncedPlayerName) return "Start typing";
-
     return "No player found";
   }, [debouncedPlayerName]);
 
-  const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setPlayerName("");
+      setSelectedPlayer(null);
+    }
+  }, [location]);
+
+  const onTextInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPlayerName(event.currentTarget.value);
+  };
+
+  const handleAutocompleteChange = (
+    _event: any,
+    newSelectedPlayer: DisplayedPlayer | null
+  ) => {
+    setSelectedPlayer(newSelectedPlayer);
+
+    if (!newSelectedPlayer) {
+      setPlayerName("");
+      return;
+    }
+
+    setPlayerName(newSelectedPlayer.label);
+    onPlayerClick(newSelectedPlayer.id);
   };
 
   const onPlayerClick = (id: number) => {
@@ -45,9 +71,11 @@ export const Search = (): ReactElement => {
     <div className="w-80">
       <Autocomplete
         options={displayedPlayers ?? []}
+        value={selectedPlayer}
+        onChange={handleAutocompleteChange}
         autoHighlight
         filterOptions={(options) => options}
-        noOptionsText={emptyOptionsText} // This line shows 'No player found' when no options are available
+        noOptionsText={emptyOptionsText}
         renderOption={(props, player) => {
           const { key, ...optionProps } = props;
           return (
@@ -66,7 +94,7 @@ export const Search = (): ReactElement => {
           <TextField
             {...params}
             value={playerName}
-            onChange={onInputChange}
+            onChange={onTextInputChange}
             label="Search for a player"
             size="small"
             autoComplete="off"
