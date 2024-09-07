@@ -2,14 +2,18 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Player } from "./usePlayerSearch";
 
-type PlayerDetails = Player & {
+type PlayerAverages = {
   averageMinutes: number;
   averagePoints: number;
   averageRebounds: number;
-  averageAssits: number;
+  averageAssists: number;
   averageSteals: number;
   averageTurnovers: number;
 };
+
+export type PlayerAveragesKey = keyof PlayerAverages;
+
+export type PlayerDetails = Player & PlayerAverages;
 
 export type SortCriteria =
   | "AVERAGE_MINUTES"
@@ -29,5 +33,6 @@ export const usePlayerSort = (sortCriteria: SortCriteria) => {
       });
       return data;
     },
+    staleTime: 300_000,
   });
 };

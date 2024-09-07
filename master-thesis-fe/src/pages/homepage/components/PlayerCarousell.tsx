@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 
 export type CarousellPlayer = {
   id: number;
-  label: string;
   value: any;
   fullName: string;
   imageUrl: string;
@@ -13,10 +12,11 @@ export type CarousellPlayer = {
 
 type PlayerCarousellProps = {
   title: string;
+  label: string;
   players: CarousellPlayer[];
 };
 
-const PlayerCarousell = ({ title, players }: PlayerCarousellProps) => {
+const PlayerCarousell = ({ title, players, label }: PlayerCarousellProps) => {
   const navigate = useNavigate();
   const carouselRef = useRef<HTMLUListElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -84,7 +84,7 @@ const PlayerCarousell = ({ title, players }: PlayerCarousellProps) => {
               <img width="100" src={player.imageUrl} alt="" />
               <label>{player.fullName}</label>
               <div className="flex gap-5">
-                <label>{`${player.label}:`}</label>
+                <label>{`${label}:`}</label>
                 <label>{player.value}</label>
               </div>
             </li>

@@ -1,29 +1,61 @@
-import { ReactElement, useMemo } from "react";
-import { usePlayerSort } from "../../service/usePlayerSort";
-import PlayerCarousell, { CarousellPlayer } from "./components/PlayerCarousell";
+import { ReactElement } from "react";
+import { useTopPlayers } from "../../hooks";
+import PlayerCarousell from "./components/PlayerCarousell";
 
 export const HomePage = (): ReactElement => {
-  const { data: mostPointsPlayers } = usePlayerSort("AVERAGE_POINTS");
+  const {
+    mostPointsCarouselPlayers,
+    mostAssitsCarouselPlayers,
+    mostMinutesCarouselPlayers,
+    mostStealsCarouselPlayers,
+    mostTurnoversCarouselPlayers,
+    mostReboundsCarouselPlayers,
+  } = useTopPlayers();
 
-  const displayedMostPointPlayers: CarousellPlayer[] | undefined = useMemo(
-    () =>
-      mostPointsPlayers?.map((player) => ({
-        id: player.id,
-        fullName: player.firstName + " " + player.lastName,
-        label: "Points",
-        value: player.averagePoints,
-        imageUrl: player.imageUrl,
-      })),
-    [mostPointsPlayers]
-  );
   return (
-    <>
-      {displayedMostPointPlayers && (
+    <div className="flex flex-col gap-5">
+      {mostPointsCarouselPlayers && (
         <PlayerCarousell
           title="Most points:"
-          players={displayedMostPointPlayers}
+          label="Average Points"
+          players={mostPointsCarouselPlayers}
         />
       )}
-    </>
+      {mostAssitsCarouselPlayers && (
+        <PlayerCarousell
+          title="Most assists:"
+          label="Average Assists"
+          players={mostAssitsCarouselPlayers}
+        />
+      )}
+      {mostMinutesCarouselPlayers && (
+        <PlayerCarousell
+          title="Most minutes:"
+          label="Average Minutes"
+          players={mostMinutesCarouselPlayers}
+        />
+      )}
+      {mostStealsCarouselPlayers && (
+        <PlayerCarousell
+          title="Most steals:"
+          label="Average Steals"
+          players={mostStealsCarouselPlayers}
+        />
+      )}
+      {mostTurnoversCarouselPlayers && (
+        <PlayerCarousell
+          title="Most turnovers:"
+          label="Average Turnovers"
+          players={mostTurnoversCarouselPlayers}
+        />
+      )}
+      {mostReboundsCarouselPlayers && (
+        <PlayerCarousell
+          title="Most rebounds:"
+          label="Average Rebounds"
+          players={mostReboundsCarouselPlayers}
+        />
+      )}
+    </div>
   );
 };
