@@ -63,7 +63,7 @@ public class PlayerService {
     public List<Player> getSortedPlayers(PlayerSortCriteria sortCriteria, Integer page) {
         return playerRepository.findAll(
                         PageRequest.of(page,
-                                PLAYER_PAGE_COUNT,
+                                10,
                                 (Sort.by(Sort.Direction.DESC, sortCriteria.getFieldName()))
                         )
                 )
