@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-type Player = {
+export type Player = {
   id: number;
   firstName: string;
   lastName: string;

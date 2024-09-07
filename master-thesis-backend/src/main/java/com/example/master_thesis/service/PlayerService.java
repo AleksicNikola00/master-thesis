@@ -3,10 +3,12 @@ package com.example.master_thesis.service;
 import com.example.master_thesis.persistance.model.player.Player;
 import com.example.master_thesis.persistance.model.player.projection.PlayerBaseInfoProjection;
 import com.example.master_thesis.persistance.repository.PlayerRepository;
+import com.example.master_thesis.persistance.repository.PlayerSortCriteria;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,5 +58,15 @@ public class PlayerService {
 
     public List<PlayerBaseInfoProjection> searchPlayerByNamePageable(String playerName, Integer page) {
         return playerRepository.findByName(playerName.toLowerCase(), PageRequest.of(page, PLAYER_PAGE_COUNT));
+    }
+
+    public List<Player> getSortedPlayers(PlayerSortCriteria sortCriteria, Integer page) {
+        return playerRepository.findAll(
+                        PageRequest.of(page,
+                                PLAYER_PAGE_COUNT,
+                                (Sort.by(Sort.Direction.DESC, sortCriteria.getFieldName()))
+                        )
+                )
+                .stream().toList();
     }
 }
