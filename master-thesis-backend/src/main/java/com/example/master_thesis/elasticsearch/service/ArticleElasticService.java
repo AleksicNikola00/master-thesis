@@ -3,6 +3,7 @@ package com.example.master_thesis.elasticsearch.service;
 import co.elastic.clients.elasticsearch._types.query_dsl.TextQueryType;
 import com.example.master_thesis.elasticsearch.persistence.ArticleElastic;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHits;
@@ -20,6 +21,18 @@ import static com.example.master_thesis.elasticsearch.config.ElasticSearchConsta
 @RequiredArgsConstructor
 public class ArticleElasticService {
     private final ElasticsearchOperations elasticsearchOperations;
+    private static final int PLAYER_PAGE_COUNT = 10;
+
+    public SearchHits<ArticleElastic> getPopularArticles(int page) {
+        var pageable = PageRequest.of(page, PLAYER_PAGE_COUNT);
+
+        var randomQuery = NativeQuery.builder()
+                .withQuery(query -> query.matchAll(ma -> ma))
+                .withPageable(pageable)
+                .build();
+
+        return elasticsearchOperations.search(randomQuery, ArticleElastic.class);
+    }
 
     public SearchHits<ArticleElastic> getByQuery(String query) {
         var parameters = HighlightParameters

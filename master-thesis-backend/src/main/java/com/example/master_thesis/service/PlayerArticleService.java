@@ -28,6 +28,7 @@ public class PlayerArticleService {
 
 
         var article = ArticleElastic.builder()
+                .playerId(playerId)
                 .playerFirstName(player.getFirstName())
                 .playerLastName(player.getLastName())
                 .articleContent(articleContent)
