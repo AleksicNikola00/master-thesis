@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-import { ChangeEvent, ChangeEventHandler, ReactElement, useState } from "react";
+import { ChangeEvent, ReactElement, useState } from "react";
 import { blackInputSx } from "../../../components";
 
 const ArticleDisplay = (): ReactElement => {

@@ -6,6 +6,7 @@ import com.example.master_thesis.consumer.event.ScrapingPlayerGamesCompletedEven
 import com.example.master_thesis.persistance.model.player.Player;
 import com.example.master_thesis.service.PlayerService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +31,7 @@ public class GetPlayerArticlesConsumer extends BasePlayerConsumer {
     }
 
 
-    //@EventListener(condition = "#event.hadAdditionalData()")
+    @EventListener(condition = "#event.hadAdditionalData()")
     @Async
     public void getPlayerArticles(ScrapingPlayerGamesCompletedEvent event) {
         startProcessingWithDelay(0);
