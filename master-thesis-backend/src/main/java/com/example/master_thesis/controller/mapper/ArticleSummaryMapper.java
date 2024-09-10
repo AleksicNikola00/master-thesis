@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class ArticleSummaryMapper {
     @Autowired
     protected PlayerRepository playerRepository;
-    final protected int SUMMARY_LENGTH = 200;
+    final protected int SUMMARY_LENGTH = 400;
 
     public abstract List<ArticleSummary> convertArticlesElasticToArticlesSummary(List<ArticleElastic> articleElastics);
 
