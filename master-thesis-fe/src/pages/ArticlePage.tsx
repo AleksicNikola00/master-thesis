@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 
 export const ArticlePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get("query") ?? "";
+  const query = searchParams.get("query");
 
   const onEnterHandler = (query: string) => {
     setSearchParams({ query });
@@ -16,7 +16,7 @@ export const ArticlePage = () => {
     <div className="flex flex-col gap-3 items-center w-100%">
       <div className="font-semibold self-start text-xl">Explore Articles:</div>
       <Search
-        initialValue={query}
+        initialValue={query ?? ""}
         onEnter={onEnterHandler}
         placeholder="Search Articles"
       />

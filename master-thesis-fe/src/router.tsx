@@ -1,11 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
-import { ArticlePage, HomePage, PlayerDetailsPage } from "./pages";
+import {
+  ArticleDetailsPage,
+  ArticlePage,
+  HomePage,
+  PlayerDetailsPage,
+} from "./pages";
 import MainLayout from "./layout/MainLayout";
 
 export const routes = {
   HOMEPAGE_PATH: "/",
   PLAYER_DETAILS_PATH: "player/:id",
   ARTICLE_PATH: "article",
+  ARTICLE_DETAILS_PATH: "article/:id",
 };
 
 const router = createBrowserRouter([
@@ -24,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: routes.ARTICLE_PATH,
         element: <ArticlePage />,
+      },
+      {
+        path: routes.ARTICLE_DETAILS_PATH,
+        element: <ArticleDetailsPage />,
       },
     ],
   },
