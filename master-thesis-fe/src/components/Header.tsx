@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
-import { Search } from "./Search";
+import { AutocompleteSearch } from "./AutocompleteSearch";
 import { useNavigate } from "react-router-dom";
 
 export const Header = (): ReactElement => {
@@ -19,7 +19,7 @@ export const Header = (): ReactElement => {
         <SportsBasketballIcon />
         <h1 className="text-2xl font-bold">Euroleague Players Wiki</h1>
       </div>
-      <Search />
+      <AutocompleteSearch />
     </header>
   );
 };

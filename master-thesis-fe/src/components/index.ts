@@ -1,3 +1,4 @@
 export * from "./Header";
-export * from "./Search";
-export * from "./ArticleDisplay";
+export * from "./AutocompleteSearch";
+export * from "../pages/homepage/components/ArticleDisplay";
+export * from "./Articles";
