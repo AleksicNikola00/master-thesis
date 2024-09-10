@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 
 import PlayerOverview from "./components/PlayerOverview";
-import ArticleDisplay from "./components/ArticleDisplay";
+import { ArticleDisplay } from "../../components";
 
 export const HomePage = (): ReactElement => {
   return (

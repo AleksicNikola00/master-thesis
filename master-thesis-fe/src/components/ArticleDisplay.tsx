@@ -1,14 +1,20 @@
 import { TextField } from "@mui/material";
 import { ChangeEvent, ReactElement, useState } from "react";
-import { blackInputSx } from "../../../components";
-import { useTopArticles } from "../../../service/useTopArticles";
+import { blackInputSx } from ".";
+import { useTopArticles } from "../service";
 
-const ArticleDisplay = (): ReactElement => {
+export const ArticleDisplay = (): ReactElement => {
   const [articleQuery, setArticleQuery] = useState<string>("");
   const { data: topArticles } = useTopArticles();
 
   const onArticleQueryChange = (event: ChangeEvent<HTMLInputElement>) => {
     setArticleQuery(event.target.value);
+  };
+
+  const onKeyDown = (event: { code: string }) => {
+    if (event.code === "Enter") {
+      console.log("ENTERR");
+    }
   };
 
   return (
@@ -23,6 +29,7 @@ const ArticleDisplay = (): ReactElement => {
         type="search"
         value={articleQuery}
         onChange={onArticleQueryChange}
+        onKeyDown={onKeyDown}
         InputProps={{ sx: { borderRadius: "15px" } }}
       />
       <ul className="flex flex-col gap-10 pt-5 pb-10">
@@ -45,5 +52,3 @@ const ArticleDisplay = (): ReactElement => {
     </div>
   );
 };
-
-export default ArticleDisplay;
