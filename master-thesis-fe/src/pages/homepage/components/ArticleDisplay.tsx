@@ -11,7 +11,7 @@ export const ArticleDisplay = (): ReactElement => {
 
   const onKeyDown = (query: string) => {
     navigate({
-      pathname: routes.ARTICLE_PATH,
+      pathname: "/" + routes.ARTICLE_PATH,
       search: createSearchParams({
         query,
       }).toString(),
