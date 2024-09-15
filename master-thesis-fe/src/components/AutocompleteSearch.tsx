@@ -3,6 +3,7 @@ import { Autocomplete, TextField, Box } from "@mui/material";
 import { useDebounce } from "../hooks";
 import { usePlayerSearch } from "../service";
 import { useNavigate, useLocation } from "react-router-dom";
+import { higlightWithMark } from "../utils";
 
 type DisplayedPlayer = {
   id: number;
@@ -102,7 +103,12 @@ export const AutocompleteSearch = (): ReactElement => {
                 className="flex gap-2 items-center"
               >
                 <img width="40" src={player.imageUrl} alt="" />
-                <div className="flex">{player.label}</div>
+                <div
+                  className="flex"
+                  dangerouslySetInnerHTML={{
+                    __html: higlightWithMark(player.label, debouncedPlayerName),
+                  }}
+                />
               </div>
             </Box>
           );
