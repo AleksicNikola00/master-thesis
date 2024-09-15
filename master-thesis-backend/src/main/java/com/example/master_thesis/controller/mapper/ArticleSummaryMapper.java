@@ -1,5 +1,6 @@
 package com.example.master_thesis.controller.mapper;
 
+import com.example.master_thesis.controller.dto.ArticleDetails;
 import com.example.master_thesis.controller.dto.ArticleSummary;
 import com.example.master_thesis.elasticsearch.persistence.ArticleElastic;
 import com.example.master_thesis.persistance.model.player.Player;
@@ -29,9 +30,11 @@ public abstract class ArticleSummaryMapper {
     @Mapping(source = "articleSearchHit.content.playerFirstName", target = "playerFirstName")
     @Mapping(source = "articleSearchHit.content.playerLastName", target = "playerLastName")
     @Mapping(source = "articleSearchHit.content.playerId", target = "playerImageUrl", qualifiedByName = "getPlayerImageUrl")
-    @Mapping(source = "articleSearchHit", target = "articleContentSummary", qualifiedByName = "getArticleContentSummary")
+    @Mapping(source = "articleSearchHit", target = "articleContentSummary", qualifiedByName = "getArticleSummaryFromSearchHit")
     abstract ArticleSummary articleSearchHitToArticleSummary(SearchHit<ArticleElastic> articleSearchHit);
 
+    @Mapping(source = "article.playerId", target = "playerImageUrl", qualifiedByName = "getPlayerImageUrl")
+    public abstract ArticleDetails articleElasticToArticleDetails(ArticleElastic article);
 
     @Named("getPlayerImageUrl")
     protected String getPlayerImageUrl(Long playerId) {
@@ -39,11 +42,16 @@ public abstract class ArticleSummaryMapper {
                 .orElse("");
     }
 
-    @Named("getArticleContentSummary")
-    protected String getArticleContentSummary(SearchHit<ArticleElastic> articleSearchHit) {
+    @Named("getArticleSummaryFromArticleContent")
+    protected String getArticleSummaryFromElasticArticle(String articleContent) {
+        return articleContent.substring(0, SUMMARY_LENGTH);
+    }
+
+    @Named("getArticleSummaryFromSearchHit")
+    protected String getArticleSummaryFromSearchHit(SearchHit<ArticleElastic> articleSearchHit) {
         var hitHighlightField = articleSearchHit.getHighlightField(ARTICLE_CONTENT);
         if (hitHighlightField.isEmpty())
-            return articleSearchHit.getContent().getArticleContent().substring(0, SUMMARY_LENGTH);
+            return getArticleSummaryFromElasticArticle(articleSearchHit.getContent().getArticleContent());
 
         return String.join(HIGHLIGHT_DELIMITER, hitHighlightField);
     }

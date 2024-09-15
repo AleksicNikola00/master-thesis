@@ -2,6 +2,8 @@ package com.example.master_thesis.elasticsearch.service;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.TextQueryType;
 import com.example.master_thesis.elasticsearch.persistence.ArticleElastic;
+import com.example.master_thesis.elasticsearch.persistence.ArticleElasticRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
@@ -22,6 +24,7 @@ import static com.example.master_thesis.elasticsearch.config.ElasticSearchConsta
 public class ArticleElasticService {
     private final ElasticsearchOperations elasticsearchOperations;
     private static final int PLAYER_PAGE_COUNT = 10;
+    private final ArticleElasticRepository articleElasticRepository;
 
     public SearchHits<ArticleElastic> getPopularArticles(int page) {
         var pageable = PageRequest.of(page, PLAYER_PAGE_COUNT);
@@ -69,4 +72,8 @@ public class ArticleElasticService {
         return elasticsearchOperations.search(multiMatchQuery, ArticleElastic.class);
     }
 
+    public ArticleElastic getById(String id) {
+        return articleElasticRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+    }
 }
