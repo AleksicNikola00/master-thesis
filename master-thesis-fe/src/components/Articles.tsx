@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { ArticleSummary } from "../service";
 import { useNavigate } from "react-router-dom";
+import { toInnerTextHtml } from "../utils";
 
 type ArticlesProps = {
   articles: ArticleSummary[];
@@ -23,7 +24,11 @@ export const Articles = ({ articles }: ArticlesProps): ReactElement => {
         rounded-xl"
         >
           <img width={250} height={250} src={article.playerImageUrl} />
-          <p>{`${article.articleContentSummary}...`}</p>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: toInnerTextHtml(article.articleContentSummary),
+            }}
+          ></div>
         </li>
       ))}
     </ul>

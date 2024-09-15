@@ -1,17 +1,17 @@
 import { Articles } from "../components";
 import { Search } from "../components/Search";
-import { useTopArticles } from "../service";
 import { useSearchParams } from "react-router-dom";
+import { useQueryArticles } from "../service";
 
 export const ArticlePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("query");
+  const { data: queriedArticles } = useQueryArticles(query);
 
   const onEnterHandler = (query: string) => {
     setSearchParams({ query });
   };
 
-  const { data: topArticles } = useTopArticles();
   return (
     <div className="flex flex-col gap-3 items-center w-100%">
       <div className="font-semibold self-start text-xl">Explore Articles:</div>
@@ -20,7 +20,7 @@ export const ArticlePage = () => {
         onEnter={onEnterHandler}
         placeholder="Search Articles"
       />
-      {topArticles && <Articles articles={topArticles} />}
+      {queriedArticles && <Articles articles={queriedArticles} />}
     </div>
   );
 };

@@ -1,9 +1,3 @@
-// String id,
-// String playerFirstName,
-// String playerLastName,
-// String playerImageUrl,
-// String articleContentSummary
-
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
