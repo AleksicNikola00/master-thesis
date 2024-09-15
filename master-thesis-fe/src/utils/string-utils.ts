@@ -7,3 +7,7 @@ export const toCamelCase = (str: string): string =>
   str
     .toLowerCase() // Convert the entire string to lowercase
     .replace(/_./g, (match) => match.charAt(1).toUpperCase()); // Replace underscores followed by a character
+
+export const toInnerTextHtml = (str: string): string => {
+  return str.charAt(str.length - 1) === "." ? str : str + "...";
+};
