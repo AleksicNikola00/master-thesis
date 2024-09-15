@@ -7,10 +7,7 @@ import com.example.master_thesis.persistance.repository.PlayerSortCriteria;
 import com.example.master_thesis.service.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +22,12 @@ public class PlayerController {
             required = false) Integer page) {
         var players = playerService.searchPlayerByNamePageable(playerName, page);
         return ResponseEntity.ok(PlayerMapper.INSTANCE.toResponseDtosFromProjections(players));
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<PlayerDetailedResponseDto> getPlayer(@PathVariable Long id) {
+        var player = playerService.getPlayerById(id);
+        return ResponseEntity.ok(PlayerMapper.INSTANCE.toDetailedResponseDto(player));
     }
 
     @GetMapping("/sorted")

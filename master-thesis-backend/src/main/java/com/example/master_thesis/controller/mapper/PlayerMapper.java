@@ -17,4 +17,6 @@ public interface PlayerMapper {
     List<PlayerResponseDto> toResponseDtosFromProjections(List<PlayerBaseInfoProjection> players);
 
     List<PlayerDetailedResponseDto> toDetailedResponseDtosFromEntities(List<Player> players);
+
+    PlayerDetailedResponseDto toDetailedResponseDto(Player player);
 }

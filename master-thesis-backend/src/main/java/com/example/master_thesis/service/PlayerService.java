@@ -69,4 +69,9 @@ public class PlayerService {
                 )
                 .stream().toList();
     }
+
+    public Player getPlayerById(Long id) {
+        return playerRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+    }
 }

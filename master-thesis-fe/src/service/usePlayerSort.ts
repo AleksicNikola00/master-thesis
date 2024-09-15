@@ -28,7 +28,7 @@ export type SortCriteria =
 export const usePlayerSort = (sortCriteria: SortCriteria) => {
   return useQuery<PlayerDetails[]>({
     enabled: !!sortCriteria,
-    queryKey: ["players", "sorted", sortCriteria],
+    queryKey: ["player", "sorted", sortCriteria],
     queryFn: async () => {
       const { data } = await axios.get(`/api/player/sorted`, {
         params: { sortCriteria },
