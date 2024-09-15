@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { useArticleDetails } from "../service";
 import { useNavigate, useParams } from "react-router-dom";
+import { ArticleDisplay } from "../components";
 
 export const ArticleDetailsPage = (): ReactElement => {
   const { id } = useParams();
@@ -13,8 +14,8 @@ export const ArticleDetailsPage = (): ReactElement => {
   };
 
   return (
-    <div className="flex flex-col">
-      <div className="2xl:px-60 xl:px-40 lg:px-24 md:px-20 sm:px-5 px-0">
+    <div className=" 2xl:px-60 xl:px-40 lg:px-24 md:px-20 sm:px-5 px-0 flex flex-col gap-20">
+      <div className="">
         <div
           className="float-left mb-2 mr-3
       hover:cursor-pointer
@@ -39,6 +40,7 @@ export const ArticleDetailsPage = (): ReactElement => {
           </a>
         </p>
       </div>
+      <ArticleDisplay />
     </div>
   );
 };
